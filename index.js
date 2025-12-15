@@ -1,6 +1,8 @@
 "use strict";
 const http = require("http");
 const fs = require('fs')
+const zlib = require("zlib");
+const { pipeline } = require("stream");
 const save_data = (data)=>{fs.writeFileSync('./data.json',data)} // function to save date and chenged 
 let users =  JSON.parse(fs.readFileSync('./data.json',"utf-8"))
 // console.log(users.at(-1)) // for last index in array 
@@ -24,6 +26,7 @@ function readFileInChunks(filePath) {
 }
 readFileInChunks('./data.json')
 //**********************************************************************************     */
+
 function writeStream(read,write){
     
 let readStream = fs.createReadStream(read);
@@ -39,8 +42,24 @@ readStream.on("end", () => {
 });
 }
 writeStream("./input.txt","./output.txt")
+//**************************************************************************     */
 
+function hub(file1, file2) {
+  pipeline(
+    fs.createReadStream(file1),
+    zlib.createGzip(),
+    fs.createWriteStream(file2),
+    (err) => {
+      if (err) {
+        console.error("error:", err);
+      } else {
+        console.log("done pipline!");
+      }
+    }
+  );
+}
 
+hub("./input.txt", "./input.txt.gz");
 
 
 
