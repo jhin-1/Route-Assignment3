@@ -61,8 +61,6 @@ function hub(file1, file2) {
 
 hub("./input.txt", "./input.txt.gz");
 
-
-
 // part 2
 
 
@@ -164,5 +162,76 @@ server.listen(3000,()=>console.log("server is running on port 3000"))
 // let iid = uurl.split('/')
 // console.log(iid)
 
-// let ggg = "ahmed yosri ahmed "
-// console.log(ggg.repeat(2000))
+// Part 3 
+
+//1 هي عبارة عن while (true) بتاخد عمليت كتير وبتنفذها باولويه في المثال التالي سوف اوضح 
+/*
+setTimeout(()=>{
+  console.log("Hello frome settime out 5000")
+  },5000)
+fs.readFile("./data.txt",utf-8,(err,data)=>{
+
+    setimmidite(()=>console.log("hello from set immidite"))
+
+    setTimeout(()=>{
+      console.log("hello from set timeout 0")
+      },0)
+  })
+
+cost server = http.createserver((req,res)=>{
+  })
+server.listen(3000,()=>console.log("server is running on port 3000"))
+**** the event loop will do this prosess 
+1- check Timeropertion if there is is any settimeout || setInterval ready for executed 
+2- check the longRunningopertion and osopertion 
+3- wait 
+4- check if there is setimmidite to execute it
+5- check if there is any close server service 
+6- next tick 
+if folow this setps will out put will be like this 
+
+output 
+1- server is running on port 3000
+2 - hello from set immidite
+3- hello from set timeout 0
+4- hello from settime out 5000
+توضيح السيرفر حيرجع الاول لان الفيل سيستم حياخد وقت لانه بيرن علي الرام مش عارف لو كانت علي الاستريم كان ايه اللي حيحصل هل حيتنفذ الاول ولاه السيرفر 
+*/
+
+// 2- libuv 
+/*
+هي مكتبة كل وظائف اللو ليفل زي os fs stream 
+جافا اسكريبت مش بتقراء الملفات علي الفيل سيستم لكن بتقدر يقراها علي السيرفر  فقط بيتحول الكود بتعها ل c++ واقدر استخدم الزظائف بتعتها 
+*/
+
+// 3- 
+/*
+
+ */
+
+// 4 - 
+
+// 5- 
+/*
+libuv 
+نود عندها اربع ثريدات تقدر تشتغل علي اكثر من عملية 
+علشان اعرف حجم الثريد بستخدم 
+set UV_THREADPOOL_SIZE = 6 or 4 
+والافضل ملعبش فيهم 
+*/  
+
+// 6 
+/*
+مثال لو عندي ملف بقراءه حياخد وقت لو معومل بكود اسنكرونس حيتبعت ليفنت لوب ويكمل بقيت الاكواد التانيه عن طريق الثريدات التانيه لحد لما يخلص وبعد كده يرجعه لما يخلص 
+fs.readFile("./data.txt","utf-8",()=>{
+  console.log("async code") ده حيروح للكول ستاك يقعد لحد لما يخلص ويرجع بالسلامه 
+  })
+console.log("hi")
+output 
+1- hi 
+2- async code 
+fs.readFileSync("data.txt","utf-8",(data)=>{
+  console.log(data)
+  })
+console.log("sync code") حيفضل واقف لحد لما العملية اللي فوق تخلص علشان مستني الثريد الوحيد 
+*/
